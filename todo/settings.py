@@ -43,12 +43,14 @@ INSTALLED_APPS = [
     'djoser',
     'todoapp',
     'core',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -155,3 +157,8 @@ DJOSER = {
         'current_user': 'core.serializers.UserSerializer',
     }
 }
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
