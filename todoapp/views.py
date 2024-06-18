@@ -5,21 +5,27 @@ from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Note,Writer
-from .serializers import NoteSummarySerializer, NoteDetailSerializer,NoteCreateSerializer,WriterSerializer
+from .serializers import NoteSummarySerializer, NoteDetailSerializer,WriterSerializer
 from .permissions import IsAdminOrReadOnly
 
 class NoteViewSet(ModelViewSet):
-    queryset = Note.objects.all()
+    permission_classes=[IsAuthenticated]
+
+    def get_serializer_context(self):
+        return {'user_id':self.request.user.id}
+
+    def get_queryset(self):
+        user=self.request.user
+        if user.is_staff:
+            return Note.objects.all()
+        (writer_id,created)=Writer.objects.get_or_create(user_id=user.id)
+        return Note.objects.filter(writer_id=writer_id.id)
 
     def get_serializer_class(self):
-        if self.request.method == 'GET':
-            if self.action == 'list':
-                return NoteSummarySerializer
-            return NoteDetailSerializer
-        elif self.request.method == 'POST':
-            return NoteCreateSerializer
-    
-
+        if self.action == 'list':
+            return NoteSummarySerializer
+        return NoteDetailSerializer
+        
 class WriterViewSet(ModelViewSet):
     queryset = Writer.objects.all()
     serializer_class = WriterSerializer

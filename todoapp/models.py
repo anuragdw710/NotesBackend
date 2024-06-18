@@ -35,7 +35,7 @@ class Note(models.Model):
     heading = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    writer= models.ForeignKey(Writer, on_delete=models.PROTECT)
+    writer= models.ForeignKey(Writer, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.heading

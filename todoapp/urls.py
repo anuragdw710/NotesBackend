@@ -5,7 +5,7 @@ from . import views
 
 router=routers.DefaultRouter()
 
-router.register('notes',views.NoteViewSet)
+router.register('notes',views.NoteViewSet,basename='notes')
 router.register('writers',views.WriterViewSet)
 
 urlpatterns =router.urls
