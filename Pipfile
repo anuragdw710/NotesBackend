@@ -12,6 +12,9 @@ drf-nested-routers = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
+dj-database-url = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

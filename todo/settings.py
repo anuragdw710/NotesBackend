@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
+import os
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,14 +89,9 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'todo',
-        'HOST': 'localhost',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-    }
+    "default": dj_database_url.parse(config.get("DATABASE_URL"))
 }
 
 
@@ -159,6 +160,5 @@ DJOSER = {
 }
 
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-]
+
+CORS_ALLOW_ALL_ORIGINS = True
